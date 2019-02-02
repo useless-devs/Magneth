@@ -47,7 +47,7 @@ contract('Magneth', () => {
         multisigInstance = await Magneth.new([wallets[0].getAddressString(), wallets[1].getAddressString()], requiredConfirmations)
         tokenInstance = await SimpleToken.new(multisigInstance.address)
 
-        const deposit = 10000000
+        const deposit = 4000000000000000000 // 4 ether
         // Send money to wallet contract
         await new Promise((resolve, reject) => web3.eth.sendTransaction({to: multisigInstance.address, value: deposit, from: wallets[0].getAddressString()}, e => (e ? reject(e) : resolve())))
         const balance = await utils.balanceOf(web3, multisigInstance.address)
@@ -75,6 +75,25 @@ contract('Magneth', () => {
             1000000,
             await tokenInstance.balanceOf(wallets[1].getAddressString())
         )
+    })
+
+    it('Should send ether', async () => {
+
+        const value = 1000000000000000 // 1 ether
+        const transactionId = encodeTransactionId(wallets[3].getAddressString(), value, '0x')
+        const sig1 = utils.formatSignature(ethUtils.ecsign(ethUtils.toBuffer(transactionId), wallets[0].getPrivateKey()))
+        const sig2 = utils.formatSignature(ethUtils.ecsign(ethUtils.toBuffer(transactionId), wallets[1].getPrivateKey()))
+        const signatures = utils.concatSignature([sig1, sig2])
+
+        const executedTransactionId = utils.getParamFromTxEvent(
+            await multisigInstance.submitTransaction(wallets[3].getAddressString(), value, '0x', signatures, {from: wallets[0].getAddressString()}),
+            'transactionId', null, 'Execution')
+
+        assert.equal(transactionId, executedTransactionId)
+        // Check that the transfer has actually occured
+        const balance = await utils.balanceOf(web3, multisigInstance.address).valueOf()
+        assert.equal(balance, 3999000000000000000)
+
     })
 
     it('Should fail tokens transfer', async () => {
