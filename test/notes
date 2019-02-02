@@ -27,3 +27,13 @@ const sig2 = utils.formatSignature(ethUtils.ecsign(ethUtils.toBuffer(transaction
 const signatures = utils.concatSignature([sig1, sig2])
 
 console.log('signature ', signatures)*/
+
+/*
+    it('Should fail transfer signatures are missing', async () => {
+        const transferEncoded = tokenInstance.contract.methods.transfer("0x9d7713f5048c270d7c1dBe65F44644F4eA47f774", 15).encodeABI()
+        console.log(transferEncoded)
+        const transactionId = encodeTransactionId("0x2f45b6fb2f28a73f110400386da31044b2e953d4", 0, transferEncoded)
+        console.log('transactionId ', transactionId)
+        const sig1 = utils.formatSignature(ethUtils.ecsign(ethUtils.toBuffer(transactionId), ethUtils.toBuffer("0x338E6DFE9780F16D70A0CED0C21667C0D03AB464DF72EFE6A2306449BA44EB1D")))
+        console.log(sig1)
+    })*/
