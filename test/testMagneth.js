@@ -96,6 +96,20 @@ contract('Magneth', () => {
 
     })
 
+    it('Should fail send ether', async () => {
+
+        const value = 1000000000000000 // 1 ether
+        const transactionId = encodeTransactionId(wallets[3].getAddressString(), value, '0x')
+        const sig1 = utils.formatSignature(ethUtils.ecsign(ethUtils.toBuffer(transactionId), wallets[0].getPrivateKey()))
+        const sig2 = utils.formatSignature(ethUtils.ecsign(ethUtils.toBuffer(transactionId), wallets[1].getPrivateKey()))
+        const signatures = utils.concatSignature([sig1, sig2])
+
+        utils.assertThrowsAsynchronously(
+            multisigInstance.submitTransaction(wallets[3].getAddressString(), value, '0x', signatures, {from: wallets[0].getAddressString()}),
+            'the owner does not exist')
+
+    })
+
     it('Should fail tokens transfer', async () => {
 
         const value = 1000000
