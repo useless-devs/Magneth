@@ -1,0 +1,35 @@
+{
+  "name": "multisig-wallet-magneth",
+  "version": "0.1.0",
+  "description": "Main module, for installing all dependencies",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/useless-devs/Magneth.git"
+  },
+  "author": "Uselessdevs (https://uselessdevs.io/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/useless-devs/Magneth/issues"
+  },
+  "homepage": "https://github.com/useless-devs/Magneth#readme",
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": false
+    }
+  },
+  "dependencies": {
+    "ethereumjs-testrpc": "4.1.3",
+    "ethereumjs-util": "^6.0.0",
+    "ethereumjs-wallet": "^0.6.3",
+    "mocha": "^5.2.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "7.2.3",
+    "eslint": "4.19.1",
+    "eslint-config-airbnb": "15.1.0",
+    "eslint-plugin-import": "2.12.0",
+    "eslint-plugin-jsx-a11y": "5.1.1",
+    "eslint-plugin-react": "7.8.2"
+  }
+}

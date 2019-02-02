@@ -1,0 +1,29 @@
+
+const Web3 = require('web3')
+const web3 = new Web3()
+const emptyHash = '0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470'
+
+function encodeTransactionId(destination, value, data) {
+
+    let dataHash = emptyHash;
+    if (data !== "0x") {
+        dataHash = web3.utils.soliditySha3({ t: 'bytes', v: data });
+    }
+
+    return web3.utils.soliditySha3(
+        { t: 'address', v: multisigInstance.address },
+        { t: 'address', v: destination },
+        { t: 'uint256', v: value },
+        { t: 'bytes', v: dataHash }
+    );
+}
+
+
+const transactionId = encodeTransactionId("0x737f3Fb60533Ce0C51B4100139AD94418F7d8775", 2, '0x')
+console.log('transactionId ', transactionId)
+
+/*const sig1 = utils.formatSignature(ethUtils.ecsign(ethUtils.toBuffer(transactionId), ethUtils.toBuffer('0x338E6DFE9780F16D70A0CED0C21667C0D03AB464DF72EFE6A2306449BA44EB1D')))
+const sig2 = utils.formatSignature(ethUtils.ecsign(ethUtils.toBuffer(transactionId), ethUtils.toBuffer('0x512850C7EBE3E1ADE1D0F28EF6EEBDD3BA4E78748E0682F8FDA6FC2C2C5B334A')))
+const signatures = utils.concatSignature([sig1, sig2])
+
+console.log('signature ', signatures)*/
