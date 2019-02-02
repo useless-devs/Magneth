@@ -1,7 +1,6 @@
 const Magneth = artifacts.require('Magneth')
 const web3 = Magneth.web3
-const TestToken = artifacts.require('TestToken')
-const TestCalls = artifacts.require('TestCalls')
+const SimpleToken = artifacts.require('SimpleToken')
 const ethUtils = require('ethereumjs-util')
 const Wallet = require('ethereumjs-wallet');
 const utils = require('./utils')
@@ -9,11 +8,8 @@ const utils = require('./utils')
 const deployMultisig = (owners, confirmations) => {
     return Magneth.new(owners, confirmations)
 }
-const deployToken = () => {
-	return TestToken.new()
-}
-const deployCalls = () => {
-	return TestCalls.new()
+const deployToken = (multisigInstance) => {
+	return SimpleToken.new(multisigInstance)
 }
 
 const privateKeys = [
@@ -35,7 +31,6 @@ const wallets = [
 contract('Magneth', () => {
     let multisigInstance
     let tokenInstance
-    let callsInstance
     const requiredConfirmations = 2
     const emptyHash = '0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470'
 
@@ -48,7 +43,7 @@ contract('Magneth', () => {
         }
 
         return web3.utils.soliditySha3(
-            { t: 'address', v: '0x3e3af46872fd6c2b9fad9f50e3ffd10d2dccd826' },
+            { t: 'address', v: multisigInstance.address },
             { t: 'address', v: destination },
             { t: 'uint256', v: value },
             { t: 'bytes', v: dataHash }
@@ -58,10 +53,8 @@ contract('Magneth', () => {
     
     before(async () => {
         multisigInstance = await deployMultisig([wallets[0].getAddressString(), wallets[1].getAddressString()], requiredConfirmations)
-        tokenInstance = await deployToken()
+        tokenInstance = await deployToken(multisigInstance.address)
         assert.ok(tokenInstance)
-        callsInstance = await deployCalls()
-        assert.ok(callsInstance)
 
         const deposit = 10000000
 
@@ -70,14 +63,10 @@ contract('Magneth', () => {
         const balance = await utils.balanceOf(web3, multisigInstance.address)
         assert.equal(balance.valueOf(), deposit)
     })
-    /*
+    
     it('Should transfer tokens', async () => {
 
         const value = 1000000
-        // Issue tokens to the multisig address
-        const issueResult = await tokenInstance.issueTokens(multisigInstance.address, value, {from: wallets[0].getAddressString()})
-        assert.ok(issueResult)
-
         // Encode transfer call for the multisig
         const transferEncoded = tokenInstance.contract.methods.transfer(wallets[1].getAddressString(), value).encodeABI()
 
@@ -97,7 +86,7 @@ contract('Magneth', () => {
             await tokenInstance.balanceOf(wallets[1].getAddressString())
         )
     })
-
+/*
     it('Should fail tokens transfer', async () => {
         // Issue tokens to the multisig address
         const value = 1000000
@@ -126,7 +115,7 @@ contract('Magneth', () => {
             multisigInstance.submitTransaction(wallets[1].getAddressString(), 1, '0x', sig1, {from: wallets[0].getAddressString()}),
             "signatures is not defined"
         )
-    })*/
+    })
 
     it('Should fail transfer signatures are missing', async () => {
         const transferEncoded = tokenInstance.contract.methods.transfer("0x9d7713f5048c270d7c1dBe65F44644F4eA47f774", 15).encodeABI()
@@ -135,6 +124,6 @@ contract('Magneth', () => {
         console.log('transactionId ', transactionId)
         const sig1 = utils.formatSignature(ethUtils.ecsign(ethUtils.toBuffer(transactionId), ethUtils.toBuffer("0x338E6DFE9780F16D70A0CED0C21667C0D03AB464DF72EFE6A2306449BA44EB1D")))
         console.log(sig1)
-    })
+    })*/
 
 })
