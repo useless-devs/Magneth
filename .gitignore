@@ -1,71 +1,39 @@
-# Basics
-*.py[cod]
-*.pyc
-__pycache__
-
-# Logs
-*.log
-pip-log.txt
-
-# Unit test / coverage reports
-.coverage
-.tox
-nosetests.xml
-
-# Translations
-*.mo
-*.pot
-
-# Pycharm
-.idea
-
-# Vagrant
-.vagrant
-
-# Vim
-
-*~
 *.swp
 *.swo
 
-# npm
-node_modules/
-# package-lock.json
-# dapp/package-lock.json
+# Logs
+logs
+*.log
 
-# Compass
-.sass-cache
+# Runtime data
+pids
+*.pid
+*.seed
+allFiredEvents
+scTopics
 
-# sqlite
-*.sqlite
+# Coverage directory used by tools like istanbul
+coverage
+coverage.json
+coverageEnv
 
-CACHE
+# node-waf configuration
+.lock-wscript
 
-# OS generated files #
-######################
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+# Dependency directory
+node_modules
 
-# pip
-/src
+# Debug log from npm
+npm-debug.log
 
-# Collected static files via Django's staticfiles app
-/staticfiles
+# local env variables
+.env
 
-# Truffle
-/build
+# truffle build directory
+build/
 
-# Bower
-dapp/bower_components
+# lol macs
+.DS_Store/
 
-# Keys
-dapp/localhost.crt
-dapp/localhost.key
-
-# Travis
-.travis/deploy_key
+# truffle
+.node-xmlhttprequest-*
