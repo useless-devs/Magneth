@@ -42,7 +42,6 @@ contract('Magneth', () => {
         );
     }
 
-    
     before(async () => {
         multisigInstance = await Magneth.new([wallets[0].getAddressString(), wallets[1].getAddressString()], requiredConfirmations)
         tokenInstance = await SimpleToken.new(multisigInstance.address)
@@ -53,7 +52,7 @@ contract('Magneth', () => {
         const balance = await utils.balanceOf(web3, multisigInstance.address)
         assert.equal(balance.valueOf(), deposit)
     })
-    
+
     it('Should transfer tokens', async () => {
 
         const value = 1000000
