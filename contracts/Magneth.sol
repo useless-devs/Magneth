@@ -1,4 +1,4 @@
-pragma solidity 0.5.0;
+pragma solidity 0.5.2;
 
 
 /// @title Multisignature off-chain wallet - Allows multiple parties to agree on transactions before execution.
@@ -30,6 +30,9 @@ contract Magneth {
     mapping (bytes32 => Transaction) public transactions;
     mapping (bytes32 => mapping (address => bool)) private confirmations;
     mapping (address => bool) public isOwner;
+    bytes32[] public transactionIds;
+
+    string public name;
     address[] public owners;
     uint256 public required;
 
@@ -103,16 +106,18 @@ contract Magneth {
      * Public functions
      */
     /// @dev Contract constructor sets initial owners and required number of confirmations.
+    /// @param _name string of wallet name.
     /// @param _owners List of initial owners.
     /// @param _required Number of required confirmations.
-    constructor(address[] memory _owners, uint256 _required)
-        public
+    constructor(string memory _name, address[] memory _owners, uint256 _required)
+        payable public
         validRequirement(_owners.length, _required)
     {
         for (uint256 i=0; i < _owners.length; i++) {
             require(!isOwner[_owners[i]] && _owners[i] != address(0));
             isOwner[_owners[i]] = true;
         }
+        name = _name;
         owners = _owners;
         required = _required;
     }
@@ -332,6 +337,7 @@ contract Magneth {
             data: data,
             executed: false
         });
+        transactionIds.push(transactionId);
         emit Submission(transactionId);
     }
 
