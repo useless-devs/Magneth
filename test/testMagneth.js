@@ -43,7 +43,7 @@ contract('Magneth', () => {
     }
 
     before(async () => {
-        multisigInstance = await Magneth.new([wallets[0].getAddressString(), wallets[1].getAddressString()], requiredConfirmations)
+        multisigInstance = await Magneth.new("new wallet", [wallets[0].getAddressString(), wallets[1].getAddressString()], requiredConfirmations)
         tokenInstance = await SimpleToken.new(multisigInstance.address)
 
         const deposit = 4000000000000000000 // 4 ether
