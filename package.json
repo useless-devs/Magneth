@@ -23,10 +23,10 @@
     "ethereumjs-util": "^6.0.0",
     "ethereumjs-wallet": "^0.6.3",
     "mocha": "^5.2.0",
+    "solc": "^0.5.2",
     "truffle": "^5.0.3",
     "web3": "1.0.0-beta.36",
-    "web3-utils": "^1.0.0-beta.36",
-    "solc": "^0.5.2"
+    "web3-utils": "^1.0.0-beta.42"
   },
   "devDependencies": {
     "babel-eslint": "7.2.3",
