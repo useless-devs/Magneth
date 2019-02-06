@@ -27,7 +27,7 @@ const wallets = [
     Wallet.fromPrivateKey(privateKeys[4])
 ]
 
-contract('Magneth', () => {
+contract('MagnethFactory', () => {
     
   it('Should create magneth wallet', async () => {
     const fromAddress = wallets[0].getAddress()

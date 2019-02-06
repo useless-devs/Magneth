@@ -86,7 +86,7 @@ async function deployMagneth(fromAddress, factoryAddress, salt) {
   const factory = new web3.eth.Contract(factoryAbi, factoryAddress)
   const nonce = await web3.eth.getTransactionCount(fromAddress)
   const bytecode = `${magnethBytecode}${encodeParam('address', fromAddress).slice(2)}`
-  const result = await factory.methods.deploy(bytecode, salt).send({
+  const result = await factory.methods.deploy(bytecode, salt, true).send({
     from: fromAddress,
     gas: 4500000,
     gasPrice: 10000000000,
