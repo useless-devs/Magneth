@@ -1,4 +1,4 @@
-pragma solidity 0.5.0;
+pragma solidity 0.5.2;
 
 import './Factory.sol';
 
@@ -13,8 +13,9 @@ contract MagnethFactory is Factory {
     /// @dev Allows creation of magneth wallet with opcode create2.
     /// @param code byte code for contract
     /// @param salt Number of salt
+    /// @param registry Bool registry creation is optinal 
     /// @return Returns wallet address.
-    function deploy(bytes memory code, uint256 salt) public {
+    function deploy(bytes memory code, uint256 salt, bool registry) public {
         address payable addr;
         assembly {
           addr := create2(0, add(code, 0x20), mload(code), salt)
@@ -24,6 +25,8 @@ contract MagnethFactory is Factory {
         }
         
         emit Deployed(addr, salt);
-        register(addr);
+        if (registry) {
+          register(addr);
+        } 
     }
 }
