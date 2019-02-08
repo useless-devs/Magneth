@@ -2,7 +2,6 @@ pragma solidity 0.5.2;
 
 import './Factory.sol';
 
-
 contract MagnethFactory is Factory {
 
     event Deployed(address addr, uint256 salt);
@@ -15,7 +14,7 @@ contract MagnethFactory is Factory {
     /// @param salt Number of salt
     /// @param registry Bool registry creation is optinal 
     /// @return Returns wallet address.
-    function deploy(bytes memory code, uint256 salt, bool registry) public {
+    function build(bytes memory code, uint256 salt, bool registry) public {
         address payable addr;
         assembly {
           addr := create2(0, add(code, 0x20), mload(code), salt)

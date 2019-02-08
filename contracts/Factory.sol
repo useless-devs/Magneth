@@ -11,14 +11,13 @@ contract Factory {
 
   
     /// @dev Registers contract in factory registry.
-    /// @param addr Address of contract instantiation.
+    /// @param addr Magneth address.
     function register(address payable addr)
         internal
     {
-        Magneth magneth = Magneth(addr);
-        address[] memory owners = magneth.getOwners();
+        address[] memory owners = Magneth(addr).getOwners();
         uint256 count = owners.length;
-        for(uint256 i=0;i < count; i++) 
+        for(uint256 i=0;i < count; i++)
             instantiations[owners[i]].push(addr);
     }
 }
