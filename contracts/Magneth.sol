@@ -109,7 +109,7 @@ contract Magneth {
     /// @param _name string of wallet name.
     /// @param _owners List of initial owners.
     /// @param _required Number of required confirmations.
-    constructor(string memory _name, address[] memory _owners, uint256 _required)
+    constructor (string memory _name, address[] memory _owners, uint256 _required)
         payable public
         validRequirement(_owners.length, _required)
     {
