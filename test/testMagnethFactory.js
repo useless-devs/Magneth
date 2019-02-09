@@ -50,8 +50,7 @@ contract('MagnethFactory', () => {
     console.log(computedAddr)
     console.log(await isContract(computedAddr))
   
-    const result = await deployMagneth(fromAddress, factoryAddress, bytecode, salt)
-  
+    await deployMagneth(fromAddress, factoryAddress, bytecode, salt)
     console.log(await isContract(computedAddr))
   })
 
